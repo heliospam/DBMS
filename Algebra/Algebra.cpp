@@ -40,7 +40,6 @@ int Algebra::select(char srcRel[ATTR_SIZE], char targetRel[ATTR_SIZE], char attr
   if (srcRelId == E_RELNOTOPEN) {
     return E_RELNOTOPEN;
   }
-
   AttrCatEntry attrCatEntry;
   // get the attribute catalog entry for attr, using AttrCacheTable::getAttrcatEntry()
   //    return E_ATTRNOTEXIST if it returns the error
@@ -48,7 +47,6 @@ int Algebra::select(char srcRel[ATTR_SIZE], char targetRel[ATTR_SIZE], char attr
   if(ret == E_ATTRNOTEXIST) {
     return E_ATTRNOTEXIST;
   }
-
   /*** Convert strVal (string) to an attribute of data type NUMBER or STRING ***/
   int type = attrCatEntry.attrType;
   Attribute attrVal;
@@ -56,12 +54,12 @@ int Algebra::select(char srcRel[ATTR_SIZE], char targetRel[ATTR_SIZE], char attr
     if (isNumber(strVal)) {       // the isNumber() function is implemented below
       attrVal.nVal = atof(strVal);
     } else {
+      cout << "Error: Mismatch in attribute type mismatch" << endl;
       return E_ATTRTYPEMISMATCH;
     }
   } else if (type == STRING) {
     strcpy(attrVal.sVal, strVal);
   }
-
   /*** Selecting records from the source relation ***/
 
   // Before calling the search function, reset the search to start from the first hit

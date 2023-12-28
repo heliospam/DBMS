@@ -1,7 +1,8 @@
 #include "AttrCacheTable.h"
 
 #include <cstring>
-
+#include <iostream>
+using namespace std;
 AttrCacheEntry* AttrCacheTable::attrCache[MAX_OPEN];
 
 /* returns the attrOffset-th attribute for the relation corresponding to relId
@@ -51,6 +52,7 @@ int AttrCacheTable::getAttrCatEntry(int relId, char attrName[ATTR_SIZE], AttrCat
     }
   }
   // no attribute with name attrName for the relation
+  cout << "Error: Attribute does not exist" << endl;
   return E_ATTRNOTEXIST;
 }
 
