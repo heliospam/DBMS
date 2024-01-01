@@ -1,7 +1,8 @@
 #include "AttrCacheTable.h"
 
 #include <cstring>
-
+#include <iostream>
+using namespace std;
 AttrCacheEntry* AttrCacheTable::attrCache[MAX_OPEN];
 
 /* returns the attrOffset-th attribute for the relation corresponding to relId
@@ -51,10 +52,22 @@ int AttrCacheTable::getAttrCatEntry(int relId, char attrName[ATTR_SIZE], AttrCat
     }
   }
   // no attribute with name attrName for the relation
+  cout << "Error: Attribute does not exist" << endl;
   return E_ATTRNOTEXIST;
 }
 
+void AttrCacheTable::attrCatEntryToRecord(AttrCatEntry *attrCatEntry, Attribute record[ATTRCAT_NO_ATTRS])
+{
+    strcpy(record[ATTRCAT_REL_NAME_INDEX].sVal, attrCatEntry->relName);
+    strcpy(record[ATTRCAT_ATTR_NAME_INDEX].sVal, attrCatEntry->attrName);
 
+    record[ATTRCAT_ATTR_TYPE_INDEX].nVal = attrCatEntry->attrType;
+    record[ATTRCAT_PRIMARY_FLAG_INDEX].nVal = attrCatEntry->primaryFlag;
+    record[ATTRCAT_ROOT_BLOCK_INDEX].nVal = attrCatEntry->rootBlock;
+    record[ATTRCAT_OFFSET_INDEX].nVal = attrCatEntry->offset;
+
+    // copy the rest of the fields in the record to the attrCacheEntry struct
+}
 
 /* Converts a attribute catalog record to AttrCatEntry struct
     We get the record as Attribute[] from the BlockBuffer.getRecord() function.
