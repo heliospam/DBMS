@@ -12,7 +12,7 @@ typedef struct RelCatEntry {
   int firstBlk;
   int lastBlk;
   int numSlotsPerBlk;
-
+  
 } RelCatEntry;
 
 typedef struct RelCacheEntry {
